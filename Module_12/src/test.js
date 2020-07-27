@@ -10,28 +10,32 @@ function click() {
     delay: 1000,
   });
 }
-
 const input = document.querySelector('#input');
+let cardContainer = document.querySelector('.container__card');
 
-const cardContainer = document.querySelector('.container__card');
-
-const createTemplate = function (tempName, val) {
+function createTemplate(tempName, val) {
   const source = document
     .querySelector(`#${tempName}__template`)
     .innerHTML.trim();
   const template = Handlebars.compile(source);
   const markup = template(val);
   cardContainer.innerHTML = markup;
-};
-
-const createList = function (val) {
+}
+function createList(val) {
   const List = {
     names: val.map(val => val.name),
   };
+  cardContainer.innerHTML = `<template id="list__template">
+  <ul class="name__list">
+    {{#each names}}
+      <li class="name__item">{{this}}</li>
+    {{/each}}
+  </ul>
+</template>`;
   createTemplate('list', List);
-};
+}
 
-const createCard = function (val) {
+function createCard(val) {
   const country = val[0];
   const Card = {
     name: country.name,
@@ -40,10 +44,33 @@ const createCard = function (val) {
     languages: country.languages.map(lang => lang.name),
     flag: country.flag,
   };
+  cardContainer.innerHTML = `<template id="card__template">
+  <div class="country__info">
+    <h2 class="country__name">{{name}}</h2>
+    <ul class="country__list">
+      <li class="country__item">
+        <span class="text-bold">Capital: </span>{{capital}}
+      </li>
+      <li class="country__item">
+        <span class="text-bold">Population: </span>{{population}}
+      </li>
+      <li class="country__item">
+        <ul class="country__languages">
+          <span class="text-bold">Languages:</span>
+          {{#each languages}}
+          <li class="languages__item">-{{this}}</li>
+          {{/each}}
+        </ul>
+      </li>
+    </ul>
+    <div class="country__img">
+      <img src="{{flag}}" alt="" />
+    </div>
+  </div>
+</template>`;
   createTemplate('card', Card);
-};
-
-const fetching = function (val) {
+}
+function fetching(val) {
   if (val.length === 0) return;
   const url = 'https://restcountries.eu/rest/v2/name/';
   fetch(`${url}${val}`)
@@ -64,17 +91,14 @@ const fetching = function (val) {
         createCard(data);
         return;
       }
-
-      console.log(data);
     })
     .catch(error => {
       console.log(`Error: ${error}`);
     });
-};
-
-const onInput = function () {
+}
+function onInput() {
   fetching(input.value);
-};
+}
 
 const debounced = _.debounce(onInput, 500);
 

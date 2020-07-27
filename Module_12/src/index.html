@@ -12,38 +12,8 @@
       <input type="text" id="input" class="country-input" />
     </form>
     <div class="container__card">
-      <template id="card__template">
-        <div class="country__info">
-          <h2 class="country__name">{{name}}</h2>
-          <ul class="country__list">
-            <li class="country__item">
-              <span class="text-bold">Capital: </span>{{capital}}
-            </li>
-            <li class="country__item">
-              <span class="text-bold">Population: </span>{{population}}
-            </li>
-            <li class="country__item">
-              <ul class="country__languages">
-                <span class="text-bold">Languages:</span>
-                {{#each languages}}
-                <li class="languages__item">-{{this}}</li>
-                {{/each}}
-              </ul>
-            </li>
-          </ul>
-          <div class="country__img">
-            <img src="{{flag}}" alt="" />
-          </div>
-        </div>
-      </template>
-      <template id="list__template">
-        <ul class="name__list">
-          {{#each names}}
-            <li class="name__item">{{this}}</li>
-          {{/each}}
-        </ul>
-      </template>
-    </div>
+      
+    </div>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
   </body>
 </html>
